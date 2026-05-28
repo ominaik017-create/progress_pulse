@@ -15,7 +15,7 @@ export default function ChallengeDetail() {
 
   useEffect(() => {
     api.get(`/challenges/${id}`).then(r => setChallenge(r.data)).catch(() => navigate('/challenges'));
-  }, [id]);
+  }, [id, navigate]);
 
   const joinChallenge = async () => {
     try {

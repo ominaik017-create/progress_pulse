@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { ArrowLeft, Send, Trophy, Plus, X, Target, Users } from 'lucide-react';
@@ -20,20 +20,7 @@ export default function GroupDetail() {
   const socketRef = useRef(null);
   const msgEndRef = useRef(null);
 
-  useEffect(() => {
-    fetchAll();
-    const socket = io('http://localhost:5000');
-    socketRef.current = socket;
-    socket.emit('join_group', { groupId: id, userId: user._id, userName: user.name });
-    socket.on('receive_message', (message) => {
-      setMessages(prev => [...prev, message]);
-    });
-    return () => { socket.disconnect(); };
-  }, [id]);
-
-  useEffect(() => { msgEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
-
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     try {
       const [gRes, mRes, cRes] = await Promise.all([
         api.get(`/groups/${id}`),
@@ -44,7 +31,20 @@ export default function GroupDetail() {
       setMessages(mRes.data);
       setChallenges(cRes.data);
     } catch { toast.error('Failed to load group'); }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchAll();
+    const socket = io('http://localhost:5000');
+    socketRef.current = socket;
+    socket.emit('join_group', { groupId: id, userId: user?._id, userName: user?.name });
+    socket.on('receive_message', (message) => {
+      setMessages(prev => [...prev, message]);
+    });
+    return () => { socket.disconnect(); };
+  }, [id, user?._id, user?.name, fetchAll]);
+
+  useEffect(() => { msgEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
   const sendMessage = (e) => {
     e.preventDefault();

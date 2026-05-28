@@ -64,7 +64,7 @@ export default function Settings() {
           <button key={t.key} onClick={() => setTab(t.key)}
             style={{
               display:'flex', alignItems:'center', gap:7,
-              padding:'8px 18px', borderRadius:999, border:'none',
+              padding:'8px 18px', borderRadius:999,
               fontFamily:'DM Sans, sans-serif', fontSize:'0.845rem', fontWeight:600,
               cursor:'pointer', transition:'all 0.18s',
               background: tab === t.key ? 'var(--grad-primary)' : 'var(--bg-card)',

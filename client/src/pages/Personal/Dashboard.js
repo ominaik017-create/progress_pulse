@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { CheckCircle, Clock, Target, Flame, TrendingUp, Plus, Sparkles, RefreshCw, Circle } from 'lucide-react';
+import { CheckCircle, Clock, Target, Flame, TrendingUp, Plus, Sparkles, RefreshCw } from 'lucide-react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler } from 'chart.js';
 import api from '../../utils/api';
