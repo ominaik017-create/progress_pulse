@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: progresspulse
+    env: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: npm install --prefix server && npm install --prefix client && npm run build
+    startCommand: npm start --prefix server
+    autoDeploy: true
