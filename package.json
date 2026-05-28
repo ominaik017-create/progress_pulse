@@ -1,0 +1,14 @@
+{
+  "name": "progresspulse",
+  "version": "1.0.0",
+  "scripts": {
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "server": "cd server && node index.js",
+    "client": "cd client && npm start",
+    "seed": "cd server && node createAdmin.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
